@@ -6,12 +6,12 @@ import com.leelasowmya.topalbums.repository.AlbumRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,6 +22,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static com.leelasowmya.topalbums.constant.Constant.PHOTO_DIRECTORY;
+import static com.leelasowmya.topalbums.constant.Constant.PHOTO_PUBLIC_URL;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Service
@@ -30,6 +31,9 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @Transactional(rollbackOn = Exception.class)
 public class AlbumService {
     private final AlbumRepository albumRepository;
+
+    @Value("${app.base-url}")
+    private String baseUrl;
 
     public Page<Album> getAllAlbums(int page, int size) {
         log.info("Fetching all albums with page={} and size={}", page, size);
@@ -101,11 +105,8 @@ public class AlbumService {
             Files.copy(image.getInputStream(), fileStorageLocation.resolve(filename), REPLACE_EXISTING);
             log.info("Stored image for album ID {}: {}", id, filename);
 
-            // Builds and returns the public URL to access the uploaded image via a custom controller endpoint
-            return ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("/albums/image/" + filename)
-                    .toUriString();
+            // Builds and returns the public URL to access the uploaded image
+            return baseUrl + PHOTO_PUBLIC_URL + filename;
 
         } catch (IOException e) {
             log.error("Failed to save image for album ID {}", id, e);
