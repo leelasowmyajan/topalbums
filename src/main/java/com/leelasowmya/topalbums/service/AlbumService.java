@@ -33,7 +33,7 @@ public class AlbumService {
 
     public Page<Album> getAllAlbums(int page, int size) {
         log.info("Fetching all albums with page={} and size={}", page, size);
-        Page<Album> result = albumRepository.findAll(PageRequest.of(page, size, Sort.by("id")));
+        Page<Album> result = albumRepository.findAll(PageRequest.of(page, size, Sort.by("createdTime")));
         log.info("Retrieved {} albums", result.getTotalElements());
         return result;
     }

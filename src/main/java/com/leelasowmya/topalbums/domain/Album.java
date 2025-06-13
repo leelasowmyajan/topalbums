@@ -10,7 +10,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
+
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -32,4 +35,7 @@ public class Album {
     private String genre;
     private String albumUrl;
     private String photoUrl;
+    @CreationTimestamp
+    @Column(name = "created_time", updatable = false)
+    private LocalDateTime createdTime;
 }

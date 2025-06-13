@@ -5,6 +5,7 @@ import com.leelasowmya.topalbums.service.AlbumService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,5 +36,16 @@ public class AlbumController {
         log.info("Album fetched successfully: {}", album.getName());
         return ResponseEntity.ok().body(album);
     }
+
+    // Handles HTTP GET /albums?page=0&size=10
+    @GetMapping
+    public ResponseEntity<?> getAllAlbums(@RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size) {
+        log.info("Fetching all albums - page: {}, size: {}", page, size);
+        Page<Album> pageResult = albumService.getAllAlbums(page, size);
+        return ResponseEntity.ok(pageResult.getContent());
+        //return ResponseEntity.ok(albumService.getAllAlbums(page, size));
+    }
+
 
 }
