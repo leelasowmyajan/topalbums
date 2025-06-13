@@ -1,6 +1,7 @@
 package com.leelasowmya.topalbums.service;
 
 import com.leelasowmya.topalbums.domain.Album;
+import com.leelasowmya.topalbums.exception.AlbumNotFoundException;
 import com.leelasowmya.topalbums.repository.AlbumRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class AlbumService {
         return albumRepository.findById(id)
                 .orElseThrow(() -> {
                     log.error("Album with ID {} not found", id);
-                    return new RuntimeException("Album not found!");
+                    return new AlbumNotFoundException("Album with ID " + id + " not found");
                 });
     }
 

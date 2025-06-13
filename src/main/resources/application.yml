@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: topalbums  # name of Spring Boot application (used in logs and for service discovery)
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/topalbumsdb  # JDBC URL to connect to the Postgres DB running on Docker
+    username: leela           # DB username (matches docker-compose env var)
+    password: password        # DB password (also from docker-compose)
+
+  jpa:
+    hibernate:
+      ddl-auto: update        # Automatically creates/updates tables based on the @Entity classes (should use 'validate' or 'none' in prod)
+    show-sql: true            # Prints SQL queries in console - for debugging
+    database-platform: org.hibernate.dialect.PostgreSQLDialect  # Tells Hibernate you're using PostgreSQL (optimizes queries)
+
+  servlet:
+    multipart:
+      enabled: true           # Enables file upload support in Spring Boot
+      max-file-size: 1000MB   # Allows uploading files up to 1000MB
+      max-request-size: 1000MB # Sets max request size (in case of uploading multiple files or have metadata too)
+
+server:
+  port: 8080                 # Sets the port where Spring Boot app runs on (default is 8080, but can be changed if needed)

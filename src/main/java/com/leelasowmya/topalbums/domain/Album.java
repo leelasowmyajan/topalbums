@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +24,12 @@ public class Album {
     @UuidGenerator
     @Column(name = "id", unique = true, updatable = false)
     private String id;
+    @NotBlank(message = "Album name cannot be empty")
     private String name;
+    @NotBlank(message = "Artist name must not be empty")
     private String artist;
     private String releaseYear;
     private String genre;
+    private String albumUrl;
     private String photoUrl;
 }
