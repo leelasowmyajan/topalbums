@@ -33,11 +33,11 @@ topalbums/.settings
 topalbums/.springBeans
 topalbums/.sts4-cache
 
-# IntelliJ
-topalbums/.idea/
-topalbums/*.iws
-topalbums/*.iml
-topalbums/*.ipr
+# IntelliJ project-wide
+.idea/
+*.iml
+*.ipr
+*.iws
 
 # NetBeans
 topalbums/nbproject/private/
