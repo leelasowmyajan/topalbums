@@ -19,19 +19,19 @@ topalbums-ui/yarn-error.log*
 # Spring Boot Backend (topalbums)
 # -------------------------
 
-topalbums/HELP.md
-topalbums/target/
-!topalbums/**/src/main/**/target/
-!topalbums/**/src/test/**/target/
+topalbums-backend/HELP.md
+topalbums-backend/target/
+!topalbums-backend/**/src/main/**/target/
+!topalbums-backend/**/src/test/**/target/
 
 # Eclipse/STS
-topalbums/.apt_generated
-topalbums/.classpath
-topalbums/.factorypath
-topalbums/.project
-topalbums/.settings
-topalbums/.springBeans
-topalbums/.sts4-cache
+topalbums-backend/.apt_generated
+topalbums-backend/.classpath
+topalbums-backend/.factorypath
+topalbums-backend/.project
+topalbums-backend/.settings
+topalbums-backend/.springBeans
+topalbums-backend/.sts4-cache
 
 # IntelliJ project-wide
 .idea/
@@ -40,14 +40,14 @@ topalbums/.sts4-cache
 *.iws
 
 # NetBeans
-topalbums/nbproject/private/
-topalbums/nbbuild/
-topalbums/dist/
-topalbums/nbdist/
-topalbums/.nb-gradle/
-topalbums/build/
-!topalbums/**/src/main/**/build/
-!topalbums/**/src/test/**/build/
+topalbums-backend/nbproject/private/
+topalbums-backend/nbbuild/
+topalbums-backend/dist/
+topalbums-backend/nbdist/
+topalbums-backend/.nb-gradle/
+topalbums-backend/build/
+!topalbums-backend/**/src/main/**/build/
+!topalbums-backend/**/src/test/**/build/
 
 # -------------------------
 # General / OS / Editors
