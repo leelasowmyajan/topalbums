@@ -18,7 +18,7 @@ class AlbumRepositoryTest {
 
     @Test
     void testSaveAndFindById_shouldReturnSavedAlbum() {
-        // Arrange: Create a test album entity with sample values
+        // Arrange: Creating a test album entity with sample values
         Album album = new Album();
 
         // If we set album.setId(UUID...), Hibernate thinks this is an existing row and tries to update it.

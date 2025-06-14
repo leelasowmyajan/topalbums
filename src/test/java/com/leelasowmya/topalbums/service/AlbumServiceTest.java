@@ -13,10 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.leelasowmya.topalbums.constant.Constant.PHOTO_DIRECTORY;
 import static com.leelasowmya.topalbums.constant.Constant.PHOTO_PUBLIC_URL;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -178,7 +182,7 @@ class AlbumServiceTest {
         String resultUrl = albumService.uploadPhoto(albumId, mockFile);
 
         // Assert: The returned URL should contain the album ID and ".jpg"
-        assertTrue(resultUrl.contains("/albums/image/" + albumId + ".jpg"));
+        assertTrue(resultUrl.contains(PHOTO_PUBLIC_URL + albumId + ".jpg"));
 
         // Verify that findById and save were called once each
         verify(albumRepository, times(1)).findById(albumId);
@@ -187,6 +191,10 @@ class AlbumServiceTest {
         // Now we inspect the actual Album object passed into save()
         // to confirm that the photoUrl was set correctly before saving
         assertEquals(resultUrl, albumCaptor.getValue().getPhotoUrl());
+
+        // Clean up: Delete the uploaded file from disk after the test
+        Path uploadedImagePath = Paths.get(PHOTO_DIRECTORY).resolve(albumId + ".jpg");
+        Files.deleteIfExists(uploadedImagePath);
 
         System.out.println("Photo uploaded, URL generated, and album updated successfully.");
     }
