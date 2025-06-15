@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.leelasowmya</groupId>
-	<artifactId>topalbums</artifactId>
+	<artifactId>topalbums-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>topalbums</name>
 	<description>My Top Albums Application</description>

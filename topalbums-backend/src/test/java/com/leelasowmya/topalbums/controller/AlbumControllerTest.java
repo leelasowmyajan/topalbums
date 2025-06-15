@@ -114,8 +114,8 @@ class AlbumControllerTest {
         // Then check that the returned JSON contains correct album data
         mockMvc.perform(get("/albums?page=0&size=10"))
                 .andExpect(status().isOk()) // Expect HTTP 200
-                .andExpect(jsonPath("$[0].name").value("A1"))
-                .andExpect(jsonPath("$[1].artist").value("Artist2"));
+                .andExpect(jsonPath("$.content[0].name").value("A1"))
+                .andExpect(jsonPath("$.content[1].artist").value("Artist2"));
 
         // Verify: Confirm the pagination values were passed correctly to the service
         verify(albumService).getAllAlbums(0, 10);

@@ -52,8 +52,8 @@ public class AlbumController {
                                           @RequestParam(defaultValue = "10") int size) {
         log.info("Fetching all albums - page: {}, size: {}", page, size);
         Page<Album> pageResult = albumService.getAllAlbums(page, size);
-        return ResponseEntity.ok(pageResult.getContent());
-        //return ResponseEntity.ok(albumService.getAllAlbums(page, size));
+        //return ResponseEntity.ok(pageResult.getContent());
+        return ResponseEntity.ok(pageResult);
     }
 
     // Handles HTTP PUT /albums/{id}/photo to upload and attach a photo to the specified album
