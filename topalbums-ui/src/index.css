@@ -246,13 +246,13 @@ i {
 	margin-right: 0px;
 }
 
-.contact__list {
+.album__list {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	gap: 1rem;
 }
 
-.contact__item {
+.album__item {
 	width: 100%;
 	background-color: #ecf1f1;
 	padding: .88rem;
@@ -262,7 +262,7 @@ i {
 	/* max-width: 280px; */
 }
 
-.contact__header {
+.album__header {
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
@@ -271,11 +271,11 @@ i {
 	column-gap: 12px;
 }
 
-.contact__image {
+.album__image {
 	width: 50px;
 }
 
-.contact__image img {
+.album__image img {
 	width: 100%;
 	border: 3px solid var(--selective-blue);
 	aspect-ratio: 1 / 1;
@@ -284,14 +284,14 @@ i {
 	border-radius: var(--radius-circle);
 }
 
-.contact_name {
+.album_name {
 	color: #3c3f3f;
 	font-size: 1.25rem;
 	text-align: center;
 	font-weight: 600;
 }
 
-.contact_title {
+.album_artist {
 	font-size: 11px;
 	background-color: #dfe7e8;
 	color: var(--kappel);
@@ -301,29 +301,29 @@ i {
 	padding: 2px;
 }
 
-.contact__body {
+.album__body {
 	margin-top: 1rem;
 }
 
-/* .contact__body>p:not(:last-child) {
+/* .album__body>p:not(:last-child) {
 	margin-bottom: .35rem;
 } */
 
-.contact__body>p {
+.album__body>p {
 	font-size: 14px;
 	margin-bottom: .35rem;
 	margin-left: 8px;
 	font-weight: 500;
 }
 
-.contact__body>p i {
+.album__body>p i {
 	color: #75777a;
 	font-size: 20px;
 	margin-right: 8px;
 	-webkit-text-stroke: .5px;
 }
 
-.contact__body>p i::before {
+.album__body>p i::before {
 	color: var(--kappel);
 	background-color: #dfe7e8;
 	padding: 7px;
