@@ -56,6 +56,15 @@ public class AlbumController {
         return ResponseEntity.ok(pageResult);
     }
 
+    // Handles HTTP PUT /albums/{id} to update an existing album
+    @PutMapping("/{id}")
+    public ResponseEntity<Album> updateAlbum(@PathVariable("id") String id, @Valid @RequestBody Album album) {
+        log.info("Updating album with ID: {}", id);
+        Album updatedAlbum = albumService.updateAlbum(id, album);
+        log.info("Album updated successfully: {}", updatedAlbum.getName());
+        return ResponseEntity.ok(updatedAlbum);
+    }
+
     // Handles HTTP PUT /albums/{id}/photo to upload and attach a photo to the specified album
     @PutMapping("/{id}/image")
     public ResponseEntity<String> uploadAlbumPhoto(@PathVariable String id,

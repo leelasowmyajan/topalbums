@@ -58,6 +58,20 @@ public class AlbumService {
         return savedAlbum;
     }
 
+    public Album updateAlbum(String id, Album album) {
+        log.info("Updating album with ID: {}", id);
+        Album existingAlbum = getAlbum(id);
+        // Update the fields of the existing album with the new data
+        existingAlbum.setName(album.getName());
+        existingAlbum.setArtist(album.getArtist());
+        existingAlbum.setReleaseYear(album.getReleaseYear());
+        existingAlbum.setGenre(album.getGenre());
+        existingAlbum.setAlbumUrl(album.getAlbumUrl());
+        Album updatedAlbum = albumRepository.save(existingAlbum);
+        log.info("Album with ID {} updated successfully", updatedAlbum.getId());
+        return updatedAlbum;
+    }
+
     public void deleteAlbum(String id) {
         log.info("Attempting to delete album with ID: {}", id);
         Album album = getAlbum(id); // will log and throw if not found
