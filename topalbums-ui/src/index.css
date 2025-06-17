@@ -259,7 +259,7 @@ i {
 .album__item {
 	width: 100%;
 	background-color: #ecf1f1;
-	padding: .88rem;
+	padding: .60rem;
 	border-radius: var(--radius-5);
 	cursor: pointer;
 	min-height: max-content;
@@ -290,7 +290,7 @@ i {
 
 .album_name {
 	color: #3c3f3f;
-	font-size: 0.99rem;
+	font-size: 0.81rem;
 	text-align: center;
 	font-weight: 600;
 }

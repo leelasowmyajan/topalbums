@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useState, useRef } from 'react';
-import { getAlbums } from './api/AlbumService';
+import { getAlbums, saveAlbum, updatePhoto } from './api/AlbumService';
 import Header from './components/Header';
 import AlbumList from './components/AlbumList'
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ function App() {
       setCurrentPage(page);  // Set the current page
       const { data } = await getAlbums(page, size);  // Fetch albums from the API
       setData(data);  // Update the state with the fetched data
-      console.log(data);
+      //console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -34,6 +34,43 @@ function App() {
   const onChangeFormData = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
+
+  const handleNewAlbum = async (event) => {
+    event.preventDefault();  // Prevent form from submitting the default way (page reload - we don't want this cos ours is a one page appln)
+    try {
+      // Step 1: Save the album data (text information)
+      const { data } = await saveAlbum(values);  // Send album data (like name, artist) to the backend
+
+      // Step 2: Prepare the FormData for uploading the album cover (image)
+      const formData = new FormData();
+      formData.append('file', file, file.name);  // Add the file (album cover) to FormData
+
+      // Step 3: Upload the album cover photo and get the photo URL
+      const { data: photoUrl } = await updatePhoto(data.id, formData);
+      console.log(photoUrl);  
+
+      // Step 4: Close the modal and reset the form
+      toggleModal(false);  // Close the modal after submission
+      setFile(undefined);  // Clear the file input value in the state
+      fileRef.current.value = null;  // Clear the file input field
+
+      // Step 5: Reset the form fields after successful submission
+      setValues({
+        name: '',
+        artist: '',
+        genre: '',
+        releaseYear: '',
+        albumUrl: '',
+        photo: undefined,  // Reset the photo field
+      });
+
+      // Step 6: Fetch the updated list of albums
+      getAllAlbums();  // Refresh the album list to include the newly added album
+    } catch (error) {
+      console.log(error);  
+    }
+  };
+
 
   // Open or close the modal
   const toggleModal = show => show ? modalRef.current.showModal() : modalRef.current.close();
@@ -62,7 +99,7 @@ function App() {
         </div>
         <div className="divider"></div>
         <div className="modal__body">
-          <form>
+          <form onSubmit={handleNewAlbum}>
             <div className="user-details">
               <div className="input-box">
                 <span className="details">Name</span>

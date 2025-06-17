@@ -12,7 +12,7 @@ const Album = ({ album }) => {
                 </div>
                 <div className="album__details">
                     {/* to stop overflow in the container, let's keep it to 15 chars */}
-                    <p className="album_name">{album.name.substring(0, 20)} </p>
+                    <p className="album_name">{album.name.substring(0, 22)} </p>
                     <p className="album_artist">{album.artist}</p>
                 </div>
             </Link>
