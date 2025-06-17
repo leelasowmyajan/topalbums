@@ -246,6 +246,10 @@ i {
 	margin-right: 0px;
 }
 
+.album__header__title {
+  color: var(--selective-blue);
+}
+
 .album__list {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
