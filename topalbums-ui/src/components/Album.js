@@ -22,7 +22,7 @@ const Album = ({ album }) => {
                 <p><i className="bi bi-link-45deg"></i>{' '}
                     {/* target="_blank" = Opens link in a new browser tab
                     rel="noopener noreferrer" = Adds extra security  */}
-                    <a href={album.albumUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={album.albumUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
                         Link to Apple Music
                     </a>
                 </p>
