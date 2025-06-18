@@ -1,9 +1,10 @@
 import './App.css';
 import { useEffect, useState, useRef } from 'react';
-import { getAlbums, saveAlbum, updatePhoto } from './api/AlbumService';
+import { getAlbums, saveAlbum, updatePhoto, updateAlbum } from './api/AlbumService';
 import Header from './components/Header';
 import AlbumList from './components/AlbumList'
 import { Routes, Route, Navigate } from 'react-router-dom';
+import AlbumDetail from './components/AlbumDetail';
 
 function App() {
   const [data, setData] = useState({});  // State for storing albums data
@@ -20,12 +21,12 @@ function App() {
   });
   const [file, setFile] = useState(undefined);
 
-  const getAllAlbums = async (page = 0, size = 10) => {  // Function to fetch albums
+  const getAllAlbums = async (page = 0, size = 8) => {  // Function to fetch albums
     try {
       setCurrentPage(page);  // Set the current page
       const { data } = await getAlbums(page, size);  // Fetch albums from the API
       setData(data);  // Update the state with the fetched data
-      //console.log(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -35,42 +36,77 @@ function App() {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
+  // Handle saving the new album
   const handleNewAlbum = async (event) => {
-    event.preventDefault();  // Prevent form from submitting the default way (page reload - we don't want this cos ours is a one page appln)
+    event.preventDefault();  // Prevent form from submitting the default way (page reload)
     try {
       // Step 1: Save the album data (text information)
       const { data } = await saveAlbum(values);  // Send album data (like name, artist) to the backend
 
-      // Step 2: Prepare the FormData for uploading the album cover (image)
-      const formData = new FormData();
-      formData.append('file', file, file.name);  // Add the file (album cover) to FormData
+      // Step 2: Prepare the FormData for uploading the album cover (image), only if a file is provided
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file, file.name);  // Add the file (album cover) to FormData
 
-      // Step 3: Upload the album cover photo and get the photo URL
-      const { data: photoUrl } = await updatePhoto(data.id, formData);
-      console.log(photoUrl);  
+        // Step 3: Upload the album cover photo and get the photo URL
+        const { data: photoUrl } = await updatePhoto(data.id, formData);
+      }
 
       // Step 4: Close the modal and reset the form
-      toggleModal(false);  // Close the modal after submission
-      setFile(undefined);  // Clear the file input value in the state
-      fileRef.current.value = null;  // Clear the file input field
+      toggleModal(false);  // Close the modal
 
-      // Step 5: Reset the form fields after successful submission
+      // Reset form state and file input state
       setValues({
         name: '',
         artist: '',
         genre: '',
         releaseYear: '',
         albumUrl: '',
-        photo: undefined,  // Reset the photo field
-      });
+      });  // Reset the form fields after successful submission
+      setFile(undefined);  // Reset the file input field
+      fileRef.current.value = null;  // Clear the file input field
 
-      // Step 6: Fetch the updated list of albums
-      getAllAlbums();  // Refresh the album list to include the newly added album
+      // Step 5: Fetch the updated list of albums (to show the newly added album)
+      getAllAlbums();  // Refresh the album list
     } catch (error) {
-      console.log(error);  
+      console.log(error);
     }
   };
 
+  // Handle cancel functionality
+  const handleCancel = () => {
+    toggleModal(false);  // Close the modal
+
+    // Reset the form fields and file input field
+    setValues({
+      name: '',
+      artist: '',
+      genre: '',
+      releaseYear: '',
+      albumUrl: '',
+    });  // Reset the form fields
+    setFile(undefined);  // Reset the file input field
+    fileRef.current.value = null;  // Clear the file input field
+  };
+
+  const updateOnAlbum = async (id, album) => {
+    try {
+      const { data } = await updateAlbum(id, album);
+      console.log(data);
+      getAllAlbums();  // Refresh the album list to include the updated album
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateImage = async (id, formData) => {
+    try {
+      const { data: photoUrl } = await updatePhoto(id, formData);
+      getAllAlbums();  // Refresh the album list to include the updated album cover
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Open or close the modal
   const toggleModal = show => show ? modalRef.current.showModal() : modalRef.current.close();
@@ -87,6 +123,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Navigate to={'/albums'} />} />
             <Route path="/albums" element={<AlbumList data={data} currentPage={currentPage} getAllAlbums={getAllAlbums} />} />
+            <Route path="/albums/:id" element={<AlbumDetail updateOnAlbum={updateOnAlbum} updateImage={updateImage} getAllAlbums={getAllAlbums} />} />
           </Routes>
         </div>
       </main>
@@ -102,7 +139,7 @@ function App() {
           <form onSubmit={handleNewAlbum}>
             <div className="user-details">
               <div className="input-box">
-                <span className="details">Name</span>
+                <span className="details">Album Name</span>
                 <input type="text" value={values.name} onChange={onChangeFormData} name='name' required />
               </div>
               <div className="input-box">
@@ -128,8 +165,8 @@ function App() {
               </div>
             </div>
             <div className="form_footer">
-              <button onClick={() => toggleModal(false)} type='button' className="btn btn-danger">Cancel</button>
-              <button type='submit' className="btn">Save</button>
+              <button onClick={() => handleCancel()} type='button' className="btn btn-danger">Cancel</button>
+              <button type='submit' className="btn" onClick={() => toggleModal(false)}>Save</button>
             </div>
           </form>
         </div>

@@ -273,6 +273,11 @@ i {
 	align-items: center;
 	flex-wrap: wrap;
 	column-gap: 12px;
+	transition: transform 0.25s ease-in-out; /* Smooth transition */
+}
+
+.album__header:hover {
+    transform: scale(1.07); /* Slight zoom */
 }
 
 .album__image {
@@ -404,7 +409,7 @@ i {
 
 .profile__name {
 	color: #3c3f3f;
-	font-size: 1rem;
+	font-size: 0.94rem;
 	font-weight: 600;
 	margin-bottom: .2rem;
 }

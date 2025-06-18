@@ -1,11 +1,11 @@
-import React from 'react';
 import Album from './Album';
 
 // AlbumList component - displays a list of albums and pagination controls
 const AlbumList = ({ data, currentPage, getAllAlbums }) => {
+
   return (
     <main className="main">
-      
+
       {/* Show a message if there are no albums in the list */}
       {data?.content?.length === 0 && <div>No Albums. Add an Album!</div>}
 
@@ -28,16 +28,16 @@ const AlbumList = ({ data, currentPage, getAllAlbums }) => {
           <a onClick={() => getAllAlbums(currentPage - 1)} className={currentPage === 0 ? 'disabled' : ''}>
             &laquo;
           </a>
-          
+
           {/* Page Number Buttons */}
           {
             // Step 1: Create an array of page indexes (from 0 to totalPages - 1)
             // [...Array(data.totalPages).keys()] generates an array of numbers from 0 to (totalPages - 1)
             [...Array(data.totalPages).keys()].map((page) => (
-                
-                // Step 2: Loop through each page index using .map
-                // For each page, we render a link (<a>) with the page number
-                <a
+
+              // Step 2: Loop through each page index using .map
+              // For each page, we render a link (<a>) with the page number
+              <a
                 // Step 3: Set a unique key for each page link (using page index)
                 key={page}
                 // Step 4: When clicked, fetch albums for this specific page
@@ -45,13 +45,13 @@ const AlbumList = ({ data, currentPage, getAllAlbums }) => {
                 // Step 5: Conditionally add 'active' class if this page is the current page
                 // We compare currentPage with the page number and highlight the active page
                 className={currentPage === page ? 'active' : ''}
-                >
+              >
                 {/* <a key={page} onClick={() => getAllAlbums(page)} className={currentPage === page ? 'active' : ''}></a> */}
                 {/* Step 6: Display the page number starting from 1 (i.e., page + 1) */}
                 {page + 1}
-                </a>
+              </a>
             ))
-            }
+          }
 
           {/* Next Button - disabled on last page */}
           <a onClick={() => getAllAlbums(currentPage + 1)} className={currentPage + 1 === data.totalPages ? 'disabled' : ''}>
