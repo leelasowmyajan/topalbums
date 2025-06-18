@@ -1,10 +1,12 @@
-import './App.css';
 import { useEffect, useState, useRef } from 'react';
 import { getAlbums, saveAlbum, updatePhoto, updateAlbum, deleteAlbum } from './api/AlbumService';
 import Header from './components/Header';
 import AlbumList from './components/AlbumList'
 import { Routes, Route, Navigate } from 'react-router-dom';
 import AlbumDetail from './components/AlbumDetail';
+import 'react-toastify/dist/ReactToastify.css';
+import { toastSuccess, toastError } from './api/ToastService';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [data, setData] = useState({});  // State for storing albums data
@@ -29,6 +31,7 @@ function App() {
       console.log(data);
     } catch (error) {
       console.log(error);
+      toastError(error.message);
     }
   };
 
@@ -68,8 +71,10 @@ function App() {
 
       // Step 5: Fetch the updated list of albums (to show the newly added album)
       getAllAlbums();  // Refresh the album list
+      toastSuccess('Album Created!');
     } catch (error) {
       console.log(error);
+      toastError(error.message);
     }
   };
 
@@ -96,6 +101,7 @@ function App() {
       getAllAlbums();  // Refresh the album list to include the updated album
     } catch (error) {
       console.log(error);
+      toastError(error.message);
     }
   };
 
@@ -105,6 +111,7 @@ function App() {
       getAllAlbums();  // Refresh the album list to exclude the deleted album
     } catch (error) {
       console.log(error);
+      toastError(error.message);
     }
   };
 
@@ -114,6 +121,7 @@ function App() {
       getAllAlbums();  // Refresh the album list to include the updated album cover
     } catch (error) {
       console.log(error);
+      toastError(error.message);
     }
   };
 
@@ -180,7 +188,7 @@ function App() {
           </form>
         </div>
       </dialog>
-
+      <ToastContainer />
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getAlbum } from '../api/AlbumService';
 import { useNavigate } from 'react-router-dom';
+import { toastError, toastSuccess } from '../api/ToastService';
 
 const AlbumDetail = ({ updateOnAlbum, updateImage, deleteOnAlbum }) => {
     const navigate = useNavigate(); // Initialize navigate
@@ -24,6 +25,7 @@ const AlbumDetail = ({ updateOnAlbum, updateImage, deleteOnAlbum }) => {
             setAlbum(data);
         } catch (error) {
             console.log(error);
+            toastError(error.message);
         }
     };
 
@@ -52,8 +54,10 @@ const AlbumDetail = ({ updateOnAlbum, updateImage, deleteOnAlbum }) => {
                     photoUrl: updatedPhotoUrl // Update the photoUrl state with the new URL
                 };
             });
+            toastSuccess('Album Cover Updated!');
         } catch (error) {
             console.log(error);
+            toastError(error.message);
         }
     };
 
@@ -65,10 +69,12 @@ const AlbumDetail = ({ updateOnAlbum, updateImage, deleteOnAlbum }) => {
         event.preventDefault();
         await updateOnAlbum(id, album);
         getAlbumById(id);
+        toastSuccess('Album Details Updated!');
     };
 
     const onDeleteAlbum = async (event) => {
         await deleteOnAlbum(id);
+        toastSuccess('Album Deleted!');
         navigate('/albums'); // Navigate to '/albums' after deleting
     };
 
