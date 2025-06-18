@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useState, useRef } from 'react';
-import { getAlbums, saveAlbum, updatePhoto, updateAlbum } from './api/AlbumService';
+import { getAlbums, saveAlbum, updatePhoto, updateAlbum, deleteAlbum } from './api/AlbumService';
 import Header from './components/Header';
 import AlbumList from './components/AlbumList'
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -99,6 +99,15 @@ function App() {
     }
   };
 
+  const deleteOnAlbum = async (id) => {
+    try {
+      await deleteAlbum(id);
+      getAllAlbums();  // Refresh the album list to exclude the deleted album
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const updateImage = async (id, formData) => {
     try {
       const { data: photoUrl } = await updatePhoto(id, formData);
@@ -123,7 +132,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Navigate to={'/albums'} />} />
             <Route path="/albums" element={<AlbumList data={data} currentPage={currentPage} getAllAlbums={getAllAlbums} />} />
-            <Route path="/albums/:id" element={<AlbumDetail updateOnAlbum={updateOnAlbum} updateImage={updateImage} getAllAlbums={getAllAlbums} />} />
+            <Route path="/albums/:id" element={<AlbumDetail updateOnAlbum={updateOnAlbum} updateImage={updateImage} deleteOnAlbum={deleteOnAlbum} getAllAlbums={getAllAlbums} />} />
           </Routes>
         </div>
       </main>

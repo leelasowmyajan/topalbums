@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getAlbum } from '../api/AlbumService';
+import { useNavigate } from 'react-router-dom';
 
-const AlbumDetail = ({ updateOnAlbum, updateImage }) => {
+const AlbumDetail = ({ updateOnAlbum, updateImage, deleteOnAlbum }) => {
+    const navigate = useNavigate(); // Initialize navigate
     const inputRef = useRef();
     const [album, setAlbum] = useState({
         id: '',
@@ -65,6 +67,11 @@ const AlbumDetail = ({ updateOnAlbum, updateImage }) => {
         getAlbumById(id);
     };
 
+    const onDeleteAlbum = async (event) => {
+        await deleteOnAlbum(id);
+        navigate('/albums'); // Navigate to '/albums' after deleting
+    };
+
     // Re-fetch the album when the photoUrl is updated
     useEffect(() => {
         getAlbumById(id);  // Re-fetch the album with updated photo URL
@@ -119,7 +126,7 @@ const AlbumDetail = ({ updateOnAlbum, updateImage }) => {
                                 </div>
                             </div>
                             <div className="form_footer">
-                                <button type='button' className="btn btn-danger">Delete Album</button>
+                                <button onClick={onDeleteAlbum} type='button' className="btn btn-danger">Delete Album</button>
                                 <button type="submit" className="btn">Save</button>
                             </div>
                         </form>
