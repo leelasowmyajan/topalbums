@@ -111,6 +111,4 @@ git clone https://github.com/leelasowmyajan/topalbums-fullstack.git
 
 This project is a simple but fun way to practice full-stack development. It covers essential concepts in both backend (Spring Boot) and frontend (React). And if you run into any issues or have suggestions, let me know!
 
----
-
 
